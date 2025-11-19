@@ -12,9 +12,6 @@
     * {
       box-sizing: border-box;
     }
-    html, body {
-      height: 100%;
-    }
     body {
       margin: 0;
       padding: 2rem;
@@ -25,22 +22,21 @@
       justify-content: center;
       align-items: flex-start;
       min-height: 100vh;
-      overflow-y: auto;
     }
     .terminal {
-      width: 100%;
       max-width: 80ch;
       border: 1px solid #0f0;
       padding: 1.5rem 2rem;
-      box-shadow: 0 0 24px rgba(0, 255, 0, 0.4);
+      /* stronger glow/blur on the rectangle */
+      box-shadow:
+        0 0 18px rgba(0, 255, 0, 0.6),
+        0 0 40px rgba(0, 255, 0, 0.4),
+        0 0 80px rgba(0, 255, 0, 0.25);
       background: radial-gradient(circle at top left, #002800, #000000);
-      overflow-x: auto;  /* allow sideways scroll on small screens */
     }
     pre {
       margin: 0;
-      white-space: pre;   /* keep ASCII layout */
-      font-size: 1rem;
-      line-height: 1.4;
+      white-space: pre;
     }
     a {
       color: #0ff;
@@ -55,30 +51,42 @@
     @keyframes blink {
       50% { opacity: 0; }
     }
+
     .domain-heading {
-      font-size: 3rem;        /* big headline on desktop */
+      font-size: 2rem;
       text-align: center;
       margin-bottom: 1.5rem;
       letter-spacing: 0.08em;
-      text-shadow: 0 0 8px #0f0, 0 0 16px #0f0;
+      /* no blur on heading now */
+      text-shadow: none;
     }
 
-    /* Mobile tweaks */
+    .desktop-only {
+      display: block;
+    }
+    .mobile-only {
+      display: none;
+    }
+
+    /* Mobile layout: no horizontal scroll, simpler box */
     @media (max-width: 600px) {
       body {
-        padding: 1rem 0.5rem;
+        padding: 1rem;
+        align-items: stretch;
       }
       .terminal {
         max-width: 100%;
-        padding: 1rem;
       }
       .domain-heading {
-        font-size: 1.8rem;   /* smaller on small screens */
-        line-height: 1.2;
-        word-break: break-word;
+        font-size: 1.6rem;
       }
-      pre {
-        font-size: 0.85rem;  /* slightly smaller monospace text */
+      .desktop-only {
+        display: none;
+      }
+      .mobile-only {
+        display: block;
+        margin-top: 0.5rem;
+        white-space: pre-wrap;
       }
     }
   </style>
@@ -86,7 +94,9 @@
 <body>
   <main class="terminal" aria-label="Domain for sale: onchaincheckout.com">
     <div class="domain-heading">onchaincheckout.com</div>
-    <pre>+==================================================================+
+
+    <!-- Desktop ASCII version -->
+    <pre class="desktop-only">+==================================================================+
 |                    onchaincheckout.com for sale                  |
 +==================================================================+
 
@@ -106,6 +116,23 @@
 
   <span class="blink">_</span>
 </pre>
+
+    <!-- Mobile-friendly version (no horizontal scroll) -->
+    <pre class="mobile-only">
+STATUS   : FOR SALE
+DOMAIN   : onchaincheckout.com
+PRICE    : USD $50,000
+CATEGORY : Crypto / Web3
+           Blockchain Payments
+
+CONTACT  :
+  To make an offer or purchase
+  at the asking price, email:
+
+    >>> <span id="email-slot-mobile"></span>
+
+<span class="blink">_</span>
+    </pre>
   </main>
 
   <!-- Email obfuscation + clickable terminal -->
@@ -118,11 +145,17 @@
 
       var email = user + "@" + domain + "." + tld;
       var slot = document.getElementById("email-slot");
+      var slotMobile = document.getElementById("email-slot-mobile");
       var terminal = document.querySelector(".terminal");
 
-      // Inject clickable email link
+      // Inject clickable email link for both desktop + mobile
+      var linkHtml = '<a href="mailto:' + email + '">' + email + '</a>';
+
       if (slot) {
-        slot.innerHTML = '<a href="mailto:' + email + '">' + email + '</a>';
+        slot.innerHTML = linkHtml;
+      }
+      if (slotMobile) {
+        slotMobile.innerHTML = linkHtml;
       }
 
       // Make whole terminal clickable to open mail client
