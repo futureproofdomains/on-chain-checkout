@@ -12,6 +12,9 @@
     * {
       box-sizing: border-box;
     }
+    html, body {
+      height: 100%;
+    }
     body {
       margin: 0;
       padding: 2rem;
@@ -22,17 +25,22 @@
       justify-content: center;
       align-items: flex-start;
       min-height: 100vh;
+      overflow-y: auto;
     }
     .terminal {
+      width: 100%;
       max-width: 80ch;
       border: 1px solid #0f0;
       padding: 1.5rem 2rem;
       box-shadow: 0 0 24px rgba(0, 255, 0, 0.4);
       background: radial-gradient(circle at top left, #002800, #000000);
+      overflow-x: auto;  /* allow sideways scroll on small screens */
     }
     pre {
       margin: 0;
-      white-space: pre;
+      white-space: pre;   /* keep ASCII layout */
+      font-size: 1rem;
+      line-height: 1.4;
     }
     a {
       color: #0ff;
@@ -48,15 +56,29 @@
       50% { opacity: 0; }
     }
     .domain-heading {
-      font-size: 2rem;        /* big headline */
+      font-size: 3rem;        /* big headline on desktop */
       text-align: center;
       margin-bottom: 1.5rem;
       letter-spacing: 0.08em;
       text-shadow: 0 0 8px #0f0, 0 0 16px #0f0;
     }
+
+    /* Mobile tweaks */
     @media (max-width: 600px) {
+      body {
+        padding: 1rem 0.5rem;
+      }
+      .terminal {
+        max-width: 100%;
+        padding: 1rem;
+      }
       .domain-heading {
-        font-size: 2.5rem;    /* fit on small screens */
+        font-size: 1.8rem;   /* smaller on small screens */
+        line-height: 1.2;
+        word-break: break-word;
+      }
+      pre {
+        font-size: 0.85rem;  /* slightly smaller monospace text */
       }
     }
   </style>
