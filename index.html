@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>onchaincheckout.com is for sale - $50,000</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Premium domain onchaincheckout.com is for sale for $50,000. Ideal for Web3, crypto and blockchain payments projects.">
+  <style>
+    :root {
+      color-scheme: dark;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      padding: 2rem;
+      background: #000;
+      color: #0f0;
+      font-family: "Courier New", Courier, monospace;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+    }
+    .terminal {
+      max-width: 80ch;
+      border: 1px solid #0f0;
+      padding: 1.5rem 2rem;
+      box-shadow: 0 0 24px rgba(0, 255, 0, 0.4);
+      background: radial-gradient(circle at top left, #002800, #000000);
+    }
+    pre {
+      margin: 0;
+      white-space: pre;
+    }
+    a {
+      color: #0ff;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    .blink {
+      animation: blink 1s step-start infinite;
+    }
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+    .domain-heading {
+      font-size: 4rem;        /* big headline */
+      text-align: center;
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.08em;
+      text-shadow: 0 0 8px #0f0, 0 0 16px #0f0;
+    }
+    @media (max-width: 600px) {
+      .domain-heading {
+        font-size: 2.5rem;    /* fit on small screens */
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="terminal" aria-label="Domain for sale: onchaincheckout.com">
+    <div class="domain-heading">onchaincheckout.com</div>
+    <pre>+==================================================================+
+|                    onchaincheckout.com for sale                  |
++==================================================================+
+
+ STATUS       :  FOR SALE
+ DOMAIN       :  onchaincheckout.com
+ PRICE        :  USD $50,000
+ CATEGORY     :  Crypto / Web3 / Blockchain Payments
+
++------------------------------------------------------------------+
+| CONTACT                                                          |
++------------------------------------------------------------------+
+  To make an offer or purchase at the asking price, email:
+
+      >>> <span id="email-slot"></span>
+
++------------------------------------------------------------------+
+
+  Awaiting incoming transmission<span class="blink">_</span>
+</pre>
+  </main>
+
+  <!-- Email obfuscation + clickable terminal -->
+  <script>
+    (function () {
+      // Email pieces (change here if you ever move provider)
+      var user = "futureproofdomains"; // part before @
+      var domain = "gmail";            // part between @ and .com
+      var tld = "com";                 // top-level domain
+
+      var email = user + "@" + domain + "." + tld;
+      var slot = document.getElementById("email-slot");
+      var terminal = document.querySelector(".terminal");
+
+      // Inject clickable email link
+      if (slot) {
+        slot.innerHTML = '<a href="mailto:' + email + '">' + email + '</a>';
+      }
+
+      // Make whole terminal clickable to open mail client
+      if (terminal) {
+        terminal.style.cursor = "pointer";
+        terminal.addEventListener("click", function () {
+          window.location.href = "mailto:" + email;
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
